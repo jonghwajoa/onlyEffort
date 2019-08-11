@@ -1,0 +1,2 @@
+# onlyEffort
+make onlyEffort
