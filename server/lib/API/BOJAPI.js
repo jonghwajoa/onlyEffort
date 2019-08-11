@@ -51,13 +51,40 @@ class BOJAPI {
   }
 
   async getVsProblem(id, compareId) {
-    // const html = await this.boj.get(`vs/${id}/${compareId}`);
-    return this._getVsProblem(fs.readFileSync('vs.html'), 'utf8');
+    return this._getVsProblem(await this.boj.get(`vs/${id}/${compareId}`));
   }
 
   _getVsProblem(html) {
-    const $ = cheerio.load(html);
-    const $problemNumberList = $('div.row div.col-md-12');
+    const compareObj = {};
+    const $ = cheerio.load(html.data);
+    const vs = $('div.container > div.row > div.col-md-12');
+
+    const len = vs.length - 1;
+    for (let i = 1; i < len; i++) {
+      const header = $(vs[i])
+        .find('div.panel-heading')
+        .children('h3')
+        .children('a')
+        .text();
+
+      compareObj[header] = [];
+      const problemNumber = $(vs[i])
+        .find('div.panel-body')
+        .find('span.problem_number a');
+
+      const problemName = $(vs[i])
+        .find('div.panel-body')
+        .find('span.problem_title a');
+
+      const length = problemName.length;
+      for (let j = 0; j < length; j++) {
+        const name = $(problemName[j]).text();
+
+        const num = $(problemNumber[j]).text();
+        compareObj[header][j] = { num, name };
+      }
+    }
+    return compareObj;
   }
 }
 
