@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.use('/algorithmes', require('./algorithmes'));
+router.use('/algo', require('./algorithmes'));
 
 router.use(function(req, res, next) {
   next(createError(404));
