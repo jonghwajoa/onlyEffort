@@ -2,7 +2,7 @@ const BOJAPI = require('../../lib/API/BOJAPI');
 const bojAPI = new BOJAPI();
 
 const index = (req, res, next) => {
-  res.end('algorithm idnex');
+  res.render('algo/index')
 };
 
 const user = async (req, res, next) => {

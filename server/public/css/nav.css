@@ -1,16 +1,16 @@
 @font-face {
   font-family: 'Do Hyeon';
-  src: url('../fonts/DoHyeon-Regular.ttf') format('ttf');
+  src: url(fonts/DoHyeon-Regular.ttf) format('ttf');
 }
 
 @font-face {
   font-family: 'Nanum Gothic';
-  src: url('../fonts/NanumGothic-Regular.ttf') format('ttf');
+  src: url(fonts/NanumGothic-Regular.ttf) format('ttf');
 }
 
 @font-face {
   font-family: 'Jeju Gothic';
-  src: url('../fonts/JejuGothic.ttf') format('ttf');
+  src: url(fonts/JejuGothic.ttf) format('ttf');
 }
 
 header {

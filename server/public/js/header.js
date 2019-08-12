@@ -1,4 +1,4 @@
-new (class Header {
+class Header {
   constructor() {
     this.navEventInit();
   }
@@ -30,4 +30,6 @@ new (class Header {
       document.documentElement.clientWidth
     );
   }
-})();
+}
+
+new Header();
