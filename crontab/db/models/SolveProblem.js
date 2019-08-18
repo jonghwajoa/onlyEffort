@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const SolveProblem = sequelize.define(
     'SolveProblem',
     {
       no: {
@@ -25,4 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false
     }
   );
+
+  SolveProblem.createTodaySolve = (userId, solveProblem, date) => {
+    return SolveProblem.create({
+      userId,
+      solveProblem,
+      date
+    });
+  };
+
+  return SolveProblem;
 };

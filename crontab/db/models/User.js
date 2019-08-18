@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const User = sequelize.define(
     'User',
     {
       no: {
@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(20),
         allowNull: false,
         get() {
-          return this.getDataValue('user_id');
+          return this.getDataValue('userId');
         }
       },
       nickname: DataTypes.STRING(20),
@@ -24,4 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       paranoid: true
     }
   );
+
+  User.getAllUserId = () => User.findAll({ attributes: ['userId'], raw: true });
+
+  return User;
 };

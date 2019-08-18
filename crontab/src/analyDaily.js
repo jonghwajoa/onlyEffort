@@ -2,49 +2,40 @@ const DB = require('../db');
 const API = require('./API');
 const moment = require('moment');
 const TODAY = moment().format('YYYYMMDD');
-const api = new API();
 const bulkdata = require('./buldata');
 
+const api = new API();
 const dbConnect = async () => {
   process.env.NODE_ENV === 'development' ? await bulkdata() : await DB.sequelize.sync();
 };
 
-const getUsers = () => DB.User.findAll({ attributes: ['userId'] });
-
 const compareWithYesterday = () => {};
 
-const create = (userId, solveStr) => {
-  return DB.SolveProblem.create({
-    userId,
-    solveProblem: solveStr,
-    date: TODAY
-  });
+const getSolveProblem = async userIds => {
+  const todaySolveObj = {};
+  for (const user of userIds) {
+    const solveProblem = await api.getSolveProblem(user); // type : JSON
+    todaySolveObj[user] = solveProblem;
+  }
+  return todaySolveObj;
 };
 
-const getSolveProblem = async userIds => {
-  // return Promise.all(userIds.map(e => api.getSolveProblem(e)));
-  for (const user of userIds) {
-    const solveProblem = await api.getSolveProblem(user);
-    const createResult = await create(user, solveProblem);
-    console.log(createResult);
+const saveSolveProblem = async todaySolveObj => {
+  for (const key in todaySolveObj) {
+    await DB.SolveProblem.createTodaySolve(key, todaySolveObj[key], TODAY);
   }
 };
 
 const run = async () => {
   await dbConnect();
-  const userIds = await getUsers();
-  for (const user of userIds) {
-    console.log(user.dataValues);
-  }
-  // const SolveProblems = await getSolveProblem(userIds);
-  const result = await DB.SolveProblem.findOne({
-    where: {
-      userId: 'jonghwa0710',
-      date: TODAY
-    }
-  });
-  console.log(result);
-  // const obj = result.dataValues.solve_problem;
+  const userIds = await DB.User.getAllUserId();
+  const userIdArr = userIds.map(user => user.userId);
+  const todaySolveObj = await getSolveProblem(userIdArr);
+  await saveSolveProblem(todaySolveObj);
 };
 
-run();
+try {
+  run();
+} catch (e) {
+  console.log(e);
+}
