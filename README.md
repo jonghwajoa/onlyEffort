@@ -22,14 +22,14 @@ V1 : 알고리즘 스터디원들의 학습패턴을 상세히 분석해주자.
    - 우수 스터디원 선정
 
 ## Crontab 
-Lang : JS(ES6++)
-ORM : sequelize v5
-DB : mysql
+Lang : JS(ES6++)  
+ORM : sequelize v5  
+DB : mysql  
 
 ## server
 
-Lang : JS(ES6++) 
-View Template : ejs
-Web Framework : express
-ORM : sequelize v5
-DB : mysql
+Lang : JS(ES6++)   
+View Template : ejs  
+Web Framework : express  
+ORM : sequelize v5  
+DB : mysql  
