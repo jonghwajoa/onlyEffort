@@ -3,18 +3,20 @@ const API = require('./API');
 const moment = require('moment');
 const TODAY = moment().format('YYYYMMDD');
 const api = new API();
+const bulkdata = require('./buldata');
 
-const dbConnect = () => {
-  return DB.sequelize.sync();
+const dbConnect = async () => {
+  process.env.NODE_ENV === 'development' ? await bulkdata() : await DB.sequelize.sync();
 };
 
-const getUsers = () => {};
+const getUsers = () => DB.User.findAll({ attributes: ['userId'] });
+
 const compareWithYesterday = () => {};
 
 const create = (userId, solveStr) => {
   return DB.SolveProblem.create({
-    user_id: userId,
-    solve_problem: solveStr,
+    userId,
+    solveProblem: solveStr,
     date: TODAY
   });
 };
@@ -30,15 +32,19 @@ const getSolveProblem = async userIds => {
 
 const run = async () => {
   await dbConnect();
-  // const userIds = await getUsers();
+  const userIds = await getUsers();
+  for (const user of userIds) {
+    console.log(user.dataValues);
+  }
   // const SolveProblems = await getSolveProblem(userIds);
   const result = await DB.SolveProblem.findOne({
     where: {
-      user_id: 'jonghwa0710',
+      userId: 'jonghwa0710',
       date: TODAY
     }
   });
-  const obj = result.dataValues.solve_problem;
+  console.log(result);
+  // const obj = result.dataValues.solve_problem;
 };
 
 run();

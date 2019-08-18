@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'SolveProblem',
+    'User',
     {
       no: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -9,20 +9,19 @@ module.exports = (sequelize, DataTypes) => {
       },
       userId: {
         type: DataTypes.STRING(20),
-        allowNull: false
+        allowNull: false,
+        get() {
+          return this.getDataValue('user_id');
+        }
       },
-      solveProblem: {
-        type: DataTypes.JSON,
-        allowNull: false
-      },
-      date: {
-        type: DataTypes.INTEGER
-      }
+      nickname: DataTypes.STRING(20),
+      bojId: DataTypes.STRING(50)
     },
     {
       freezeTableName: true,
-      tableName: 'solveproblem',
-      timestamps: false
+      tableName: 'user',
+      timestamps: true,
+      paranoid: true
     }
   );
 };
