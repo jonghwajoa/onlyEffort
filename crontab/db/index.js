@@ -5,14 +5,13 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require('../config/config.js')[env];
 const db = {};
-const sequelize = new Sequelize(config.database, config.username, config.password, config);
+const { database, username, password } = config;
+const sequelize = new Sequelize(database, username, password, config);
 
 fs.readdirSync(__dirname + '/models')
-  .filter(file => {
-    return file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js';
-  })
+  .filter(file => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
   .forEach(file => {
-    var model = sequelize['import'](path.join(__dirname + '/models', file));
+    const model = sequelize['import'](path.join(__dirname + '/models', file));
     db[model.name] = model;
   });
 
