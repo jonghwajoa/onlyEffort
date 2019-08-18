@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
-    'DailySolveProblem',
+    'SolveProblem',
     {
       no: {
         type: DataTypes.INTEGER.UNSIGNED,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false
       },
       solve_problem: {
-        type: DataTypes.TEXT,
+        type: DataTypes.JSON,
         allowNull: false
       },
       date: {
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: 'tbl_daily_solve',
+      tableName: 'tbl_solve_problem',
       underscored: true,
       timestamps: false
     }
