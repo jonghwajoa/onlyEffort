@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      userId: {
+      bojId: {
         type: DataTypes.STRING(20),
         allowNull: false
       },
@@ -30,12 +30,33 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  SolveProblem.createTodaySolve = (userId, { solveProblem, size }, date) => {
+  SolveProblem.createTodaySolve = (bojId, { solveProblem, size }, date) => {
     return SolveProblem.create({
-      userId,
+      bojId,
       solveProblem,
       size,
       date
+    });
+  };
+
+  SolveProblem.findOneByDate = (bojId, date) => {
+    return SolveProblem.findOne({
+      where: {
+        bojId,
+        date
+      },
+      attributes: ['solveProblem', 'size'],
+      raw: true
+    });
+  };
+
+  SolveProblem.findAllByDate = date => {
+    return SolveProblem.findAll({
+      where: {
+        date
+      },
+      attributes: ['bojId', 'solveProblem', 'size'],
+      raw: true
     });
   };
 

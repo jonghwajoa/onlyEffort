@@ -1,6 +1,7 @@
 # onlyEffort
 
 V1 : 알고리즘 스터디원들의 학습패턴을 상세히 분석해주자.
+> https://github.com/jonghwajoa/onlyEffort/projects/1
 
 1. Account 기능
    - 약관동의
@@ -19,17 +20,19 @@ V1 : 알고리즘 스터디원들의 학습패턴을 상세히 분석해주자.
 4. 학습패턴 분석페이지
    - 일간 분석
    - 주간 분석
+   - 한주간 스터디원들이 가장 많이 푼 문제 리스트
    - 우수 스터디원 선정
 
-## Crontab 
+## Crontab
+
 Lang : JS(ES6++)  
 ORM : sequelize v5  
-DB : mysql  
+DB : mysql
 
 ## server
 
-Lang : JS(ES6++)   
+Lang : JS(ES6++)  
 View Template : ejs  
 Web Framework : express  
 ORM : sequelize v5  
-DB : mysql  
+DB : mysql
