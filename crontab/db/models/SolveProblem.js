@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.JSON,
         allowNull: false
       },
+      size: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
       date: {
         type: DataTypes.INTEGER
       }
@@ -26,10 +30,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  SolveProblem.createTodaySolve = (userId, solveProblem, date) => {
+  SolveProblem.createTodaySolve = (userId, { solveProblem, size }, date) => {
     return SolveProblem.create({
       userId,
       solveProblem,
+      size,
       date
     });
   };
