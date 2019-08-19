@@ -1,10 +1,10 @@
 const moment = require('moment');
-const TODAY = moment().format('YYYYMMDD');
 const DAY_SECOND = 3600 * 24 * 1000;
 
 const yesterdayDate = new Date();
+const tomorrowDate = new Date();
 yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-const YESTERDAY = moment(yesterdayDate).format('YYYYMMDD');
+tomorrowDate.setDate(tomorrowDate.getDate() + 1);
 
 const getCunrrentWeek = () => {
   const standardDate = new Date();
@@ -19,8 +19,14 @@ const getCunrrentWeek = () => {
   return weekNumber;
 };
 
+const TODAY = moment().format('YYYYMMDD');
+const YESTERDAY = moment(yesterdayDate).format('YYYYMMDD');
+const TOMORROW = moment(tomorrowDate).format('YYYYMMDD');
+const WEEK = getCunrrentWeek();
+
 module.exports = {
-  getCunrrentWeek,
+  WEEK,
   TODAY,
-  YESTERDAY
+  YESTERDAY,
+  TOMORROW
 };
