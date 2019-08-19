@@ -39,5 +39,26 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  SolveProblem.findOneByDate = (userId, date) => {
+    return SolveProblem.findOne({
+      where: {
+        userId,
+        date
+      },
+      attributes: ['solveProblem', 'size'],
+      raw: true
+    });
+  };
+
+  SolveProblem.findAllByDate = date => {
+    return SolveProblem.findAll({
+      where: {
+        date
+      },
+      attributes: ['userId', 'solveProblem', 'size'],
+      raw: true
+    });
+  };
+
   return SolveProblem;
 };
