@@ -16,7 +16,10 @@ class API {
   }
 
   _getSolveProblem(html) {
-    const solveObj = {};
+    const solveObj = {
+      solveProblem: {},
+      size: 0
+    };
     const $ = cheerio.load(html.data);
     const solve = $('div.row')
       .children('div.col-md-9')
@@ -34,8 +37,9 @@ class API {
     for (let j = 0; j < length; j++) {
       const num = $(problemNumber[j]).text();
       const name = $(problemName[j]).text();
-      solveObj[num] = name;
+      solveObj.solveProblem[num] = name;
     }
+    solveObj.size = length;
 
     return solveObj;
   }

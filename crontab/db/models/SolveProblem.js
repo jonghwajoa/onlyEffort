@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const SolveProblem = sequelize.define(
     'SolveProblem',
     {
       no: {
@@ -7,12 +7,16 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      user_id: {
+      userId: {
         type: DataTypes.STRING(20),
         allowNull: false
       },
-      solve_problem: {
+      solveProblem: {
         type: DataTypes.JSON,
+        allowNull: false
+      },
+      size: {
+        type: DataTypes.INTEGER,
         allowNull: false
       },
       date: {
@@ -21,9 +25,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       freezeTableName: true,
-      tableName: 'tbl_solve_problem',
-      underscored: true,
+      tableName: 'solveproblem',
       timestamps: false
     }
   );
+
+  SolveProblem.createTodaySolve = (userId, { solveProblem, size }, date) => {
+    return SolveProblem.create({
+      userId,
+      solveProblem,
+      size,
+      date
+    });
+  };
+
+  return SolveProblem;
 };
