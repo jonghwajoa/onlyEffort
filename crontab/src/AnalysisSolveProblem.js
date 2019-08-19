@@ -1,27 +1,7 @@
-const DB = require('../db');
 const API = require('./API');
-const { TODAY, YESTERDAY, TOMORROW, WEEK } = require('../lib/Date');
-const bulkdata = require('./buldata');
-
 const api = new API();
-
-const dbConnect = async () => {
-  // process.env.NODE_ENV === 'development' ? await bulkdata() : await DB.sequelize.sync();
-  await DB.sequelize.sync();
-};
-
-/**
- * @param {Object} todaySolveObj
- * Obj = {
- *  solveProblem : {},
- *  size
- * }
- */
-const saveSolveProblem = async todaySolveObj => {
-  for (const userId in todaySolveObj) {
-    await DB.SolveProblem.createTodaySolve(userId, todaySolveObj[userId], TOMORROW);
-  }
-};
+const DB = require('../db');
+const { TODAY, YESTERDAY, TOMORROW, WEEK } = require('../lib/Date');
 
 class AnalysisSolveProblem {
   constructor() {}
@@ -69,20 +49,4 @@ class AnalysisSolveProblem {
   }
 }
 
-const run = async () => {
-  await dbConnect();
-  const userIds = await DB.User.getAllUserId();
-  const userIdArr = userIds.map(user => user.userId);
-  const analysis = new AnalysisSolveProblem();
-  const todaySolveObj = await analysis.getSolveProblem(userIdArr);
-  // await saveSolveProblem(todaySolveObj);
-
-  const compareObj = await analysis.compareWithYesterday(todaySolveObj);
-  console.log(compareObj);
-};
-
-try {
-  run();
-} catch (e) {
-  console.log(e);
-}
+module.exports = AnalysisSolveProblem;
