@@ -17,8 +17,8 @@ const dbConnect = async () => {
  * }
  */
 const saveSolveProblem = async todaySolveObj => {
-  for (const userId in todaySolveObj) {
-    await DB.SolveProblem.createTodaySolve(userId, todaySolveObj[userId], TODAY);
+  for (const bojId in todaySolveObj) {
+    await DB.SolveProblem.createTodaySolve(bojId, todaySolveObj[bojId], TODAY);
   }
 };
 
@@ -26,10 +26,10 @@ const saveNewSolveProblem = async compareObj => {
   const bulks = [];
   const solveCntObj = {};
 
-  for (const userId in compareObj) {
-    const obj = compareObj[userId];
+  for (const bojId in compareObj) {
+    const obj = compareObj[bojId];
     for (const number in obj) {
-      const form = createNewSolveProblemForm(userId, number, obj[number], TODAY);
+      const form = createNewSolveProblemForm(bojId, number, obj[number], TODAY);
       solveCntObj[number] = solveCntObj[number] ? solveCntObj[number] + 1 : 1;
       bulks.push(form);
     }
@@ -39,20 +39,20 @@ const saveNewSolveProblem = async compareObj => {
   return solveCntObj;
 };
 
-const createNewSolveProblemForm = (userId, number, name, date) => {
-  return { userId, number, name, date, week: WEEK };
+const createNewSolveProblemForm = (bojId, number, name, date) => {
+  return { bojId, number, name, date, week: WEEK };
 };
 
-const getUserIds = async () => {
-  const users = await DB.User.getAllUserId();
-  return users.map(user => user.userId);
+const getbojIds = async () => {
+  const users = await DB.User.findAllByBojId();
+  return users.map(user => user.bojId);
 };
 
 const run = async () => {
   await dbConnect();
-  const userIds = await getUserIds();
+  const bojIds = await getbojIds();
   const analysis = new AnalysisSolveProblem();
-  const todaySolveObj = await analysis.getSolveProblem(userIds);
+  const todaySolveObj = await analysis.getSolveProblem(bojIds);
   // await saveSolveProblem(todaySolveObj);
 
   const compareObj = await analysis.compareWithYesterday(todaySolveObj);

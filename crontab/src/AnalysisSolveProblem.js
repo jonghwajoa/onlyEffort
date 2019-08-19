@@ -6,9 +6,9 @@ const { TODAY, YESTERDAY, TOMORROW, TWO_DAYS_AGO, WEEK } = require('../lib/Date'
 class AnalysisSolveProblem {
   constructor() {}
 
-  async getSolveProblem(userIds) {
+  async getSolveProblem(bojIds) {
     const todaySolveObj = {};
-    for (const user of userIds) {
+    for (const user of bojIds) {
       const solveProblem = await api.getSolveProblem(user); // type : JSON
       todaySolveObj[user] = solveProblem;
     }
@@ -17,17 +17,17 @@ class AnalysisSolveProblem {
 
   /**
    * @param {*} todaySolveObj
-   * @returns {Object} key : userId, value : compareArr
+   * @returns {Object} key : bojId, value : compareArr
    */
   async compareWithYesterday(todaySolveObj) {
     const compareObj = {};
-    for (const userId in todaySolveObj) {
-      const yester = await DB.SolveProblem.findOneByDate(userId, YESTERDAY);
+    for (const bojId in todaySolveObj) {
+      const yester = await DB.SolveProblem.findOneByDate(bojId, YESTERDAY);
       if (!yester) continue;
 
-      const diffs = this._compareWithYesterday(yester, todaySolveObj[userId]);
+      const diffs = this._compareWithYesterday(yester, todaySolveObj[bojId]);
       if (diffs) {
-        compareObj[userId] = diffs;
+        compareObj[bojId] = diffs;
       }
     }
     return compareObj;

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      userId: {
+      bojId: {
         type: DataTypes.STRING(20),
         allowNull: false
       },

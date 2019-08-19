@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  User.getAllUserId = () => User.findAll({ attributes: ['userId'], raw: true });
+  User.findAllByBojId = () => User.findAll({ attributes: ['bojId'], raw: true });
 
   return User;
 };
