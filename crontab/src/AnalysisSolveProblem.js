@@ -1,7 +1,7 @@
 const API = require('./API');
 const api = new API();
 const DB = require('../db');
-const { TODAY, YESTERDAY, TOMORROW, TWO_DAYS_AGO, WEEK } = require('../lib/Date');
+const { TODAY, YESTERDAY, TOMORROW, WEEK } = require('../lib/Date');
 
 class AnalysisSolveProblem {
   constructor() {}
@@ -17,7 +17,7 @@ class AnalysisSolveProblem {
 
   /**
    * @param {*} todaySolveObj
-   * @returns {Object} key : bojId, value : compareArr
+   * @returns {Object}
    */
   async compareWithYesterday(todaySolveObj) {
     const compareObj = {};
