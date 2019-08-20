@@ -1,7 +1,7 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-class BOJAPI {
+class API {
   constructor() {
     this.boj = axios.create({
       baseURL: 'https://www.acmicpc.net/',
@@ -88,4 +88,4 @@ class BOJAPI {
   }
 }
 
-module.exports = BOJAPI;
+module.exports = API;
