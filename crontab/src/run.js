@@ -40,7 +40,10 @@ const calculateDiffCnt = compareObj => {
   for (const bojId in compareObj) {
     const obj = compareObj[bojId];
     for (const number in obj) {
-      solveProblemCntObj[number] = { cnt: solveCntObj[number] ? solveCntObj[number].cnt + 1 : 1, name: obj[number] };
+      solveProblemCntObj[number] = {
+        cnt: solveProblemCntObj[number] ? solveProblemCntObj[number].cnt + 1 : 1,
+        name: obj[number]
+      };
     }
   }
 
@@ -51,7 +54,7 @@ const createNewSolveProblemForm = (bojId, number, name, date) => {
   return { bojId, number, name, date, week: WEEK };
 };
 
-const popularProblemOfWeek = async solveCntObj => {
+const savePopularProblemOfWeek = async solveCntObj => {
   for (const num in solveCntObj) {
     const { cnt, name } = solveCntObj[num];
     const instance = await DB.WeeklySolve.findOneByNum(WEEK, num);
@@ -73,14 +76,12 @@ const run = async () => {
   await dbConnect();
   const bojIds = await getbojIds();
   const analysis = new AnalysisSolveProblem();
-  // const todaySolveObj = await analysis.getSolveProblem(bojIds);
-  // await saveSolveProblem(todaySolveObj);
-
+  const todaySolveObj = await analysis.getSolveProblem(bojIds);
+  await saveSolveProblem(todaySolveObj);
   const compareObj = await analysis.compareRecentTwoData(bojIds);
   await saveNewSolveProblem(compareObj);
-  calculateDiffCnt(compareObj);
-  console.log(solveCntObj);
-  // await popularProblemOfWeek(solveCntObj);
+  const solveProblemCntObj = calculateDiffCnt(compareObj);
+  await savePopularProblemOfWeek(solveProblemCntObj);
 };
 
 try {
