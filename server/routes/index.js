@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
 router.use('/algo', require('./algorithmes'));
 router.use('/issueMaker', require('./issuemaker'));
+router.use(require('./accounts'));
 
 router.use(function(req, res, next) {
   next(createError(404));
