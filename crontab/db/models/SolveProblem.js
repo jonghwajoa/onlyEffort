@@ -50,6 +50,18 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  SolveProblem.findRecentTwoDataByBojId = bojId => {
+    return SolveProblem.findAll({
+      where: {
+        bojId
+      },
+      attributes: ['solveProblem', 'size'],
+      order: [['no', 'DESC']],
+      limit: 2,
+      raw: true
+    });
+  };
+
   SolveProblem.findAllByDate = date => {
     return SolveProblem.findAll({
       where: {
