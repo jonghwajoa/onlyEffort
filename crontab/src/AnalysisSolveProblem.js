@@ -19,33 +19,34 @@ class AnalysisSolveProblem {
    * @param {*} todaySolveObj
    * @returns {Object}
    */
-  async compareWithYesterday(todaySolveObj) {
+  async compareRecentTwoData(bojIds) {
     const compareObj = {};
-    for (const bojId in todaySolveObj) {
-      const yester = await DB.SolveProblem.findOneByDate(bojId, YESTERDAY);
-      if (!yester) continue;
-
-      const diffs = this._compareWithYesterday(yester, todaySolveObj[bojId]);
-      if (diffs) {
-        compareObj[bojId] = diffs;
+    for (const bojId of bojIds) {
+      const recent2data = await DB.SolveProblem.findRecentTwoDataByBojId(bojId);
+      if (recent2data.length !== 2) {
+        continue;
       }
+
+      const mostRecent = recent2data[0];
+      const compare = recent2data[1];
+      if (mostRecent.size === compare.size) {
+        continue;
+      }
+
+      const diffs = this._compareRecentTwoData(compare.solveProblem, mostRecent.solveProblem);
+      compareObj[bojId] = diffs;
     }
     return compareObj;
   }
 
-  _compareWithYesterday(yesterdayObj, todayObj) {
-    if (yesterdayObj.size === todayObj.size) {
-      return false;
-    }
-
-    const todaySolves = {};
-    const { solveProblem } = todayObj;
-    for (const num in solveProblem) {
-      if (!yesterdayObj.solveProblem[num]) {
-        todaySolves[num] = solveProblem[num];
+  _compareRecentTwoData(compareSolve, recentSolve) {
+    const compareResultObj = {};
+    for (const num in recentSolve) {
+      if (!compareSolve[num]) {
+        compareResultObj[num] = recentSolve[num];
       }
     }
-    return todaySolves;
+    return compareResultObj;
   }
 }
 
