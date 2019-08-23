@@ -7,7 +7,7 @@ CHART_COLOR = [
   'rgba(255, 159, 64, 1)'
 ];
 
-CHART_OPTION = {
+USERRANK_CHART_OPTION = {
   scales: {
     yAxes: [
       {
@@ -17,6 +17,16 @@ CHART_OPTION = {
         gridLines: {
           display: false
         }
+      }
+    ]
+  }
+};
+
+WEEKLY_SOLVE_CHART_OPTION = {
+  scales: {
+    yAxes: [
+      {
+        stacked: true
       }
     ]
   }

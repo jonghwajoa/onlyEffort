@@ -8,30 +8,32 @@
     <style></style>
   </head>
   <body>
-    <div class="container-fluid fill">
-      <div class="container">
-        <div class="row h-100 border border-primary rounded">
-          <div class="col-12 col-lg-6 border border-primary rounded">
-            <h2>문제 랭킹</h2>
-            <% problemRank.forEach((e,i) => { %>
-            <div>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
-                <%= e.number %></a
-              >
-              <%= e.name %> : <%= e.cnt %>
-            </div>
-            <% }) %>
+    <div class="container">
+      <div class="row border border-primary rounded">
+        <div class="col-12 col-lg-6 border border-primary rounded">
+          <h2>문제 랭킹</h2>
+          <% problemRank.forEach((e,i) => { %>
+          <div>
+            <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
+              <%= e.number %></a
+            >
+            <%= e.name %> : <%= e.cnt %>
           </div>
-          <div class="col-12 col-lg-6 border border-primary rounded">
-            <h2>유저 랭킹</h2>
-            <canvas id="userRankChart" width="400" height="400"></canvas>
-          </div>
-          <div class="col-12 col-lg-6 border border-primary rounded">
-            기간동안 풀문제
-          </div>
-          <div class="col-12 col-lg-6 border border-primary rounded">
-            유저검색
-          </div>
+          <% }) %>
+        </div>
+        <div class="col-12 col-lg-6 border border-primary rounded">
+          <h2>유저 랭킹</h2>
+          <canvas id="userRankChart" width="600" height="600">
+            Your browser does not support the canvas element.
+          </canvas>
+        </div>
+        <div class="col-12 col-lg-6 border border-primary rounded">
+          <canvas id="weeklySolveChart" width="400" height="400">
+            Your browser does not support the canvas element.
+          </canvas>
+        </div>
+        <div class="col-12 col-lg-6 border border-primary rounded">
+          유저검색
         </div>
       </div>
     </div>
@@ -41,7 +43,8 @@
     <script src="js/algo/chart.js"></script>
     <script>
       const userRank = JSON.parse(`<%-JSON.stringify(userRank)%>`);
-      const algoChart = new AlgoChart(userRank);
+      const dailySolve = JSON.parse(`<%-JSON.stringify(dailySolve)%>`);
+      const algoChart = new AlgoChart(userRank, dailySolve);
     </script>
   </body>
 </html>

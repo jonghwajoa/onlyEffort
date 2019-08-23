@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       attributes: ['bojId', [DailySolve.sequelize.fn('count', '*'), 'count'], 'date'],
       group: ['date', 'bojId'],
-      order: [[DailySolve.sequelize.col('bojId'), 'desc']],
+      order: [[DailySolve.sequelize.col('bojId'), 'desc'], ['date', 'asc']],
       raw: true
     });
   };

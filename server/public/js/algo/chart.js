@@ -1,32 +1,89 @@
 class AlgoChart {
-  constructor(userRank) {
-    const ctx = document.getElementById('userRankChart').getContext('2d');
+  constructor(userRank, dailySolve) {
+    const userRankCtx = document.getElementById('userRankChart').getContext('2d');
+    const weeklySolveCtx = document.getElementById('weeklySolveChart').getContext('2d');
 
-    const ids = [];
-    const counts = [];
-    userRank.forEach((v, i) => {
-      counts.push(v.count);
-      ids.push(v.bojId);
-    });
-    this.drawChart(ctx, 'pie', ids, counts);
+    const userRnakData = this.preProcessingUserRank(userRank);
+    userRnakData.label = 'User Solve Count Rank';
+
+    this.userRankChart = this.drawChart(userRankCtx, userRnakData, USERRANK_CHART_OPTION);
+    this.weeklySolveChart = this.drawMulipleLineChart(weeklySolveCtx);
+
+    const dailySolveData = this.preProcessingDailySolve(dailySolve);
+    this.updateWeeklySolveChart(dailySolveData);
   }
 
-  drawChart(ctx, type, labels, datas) {
-    const myChart = new Chart(ctx, {
-      type: type,
+  updateWeeklySolveChart(dailySolveData) {
+    let index = 0;
+    for (const key in dailySolveData) {
+      const line = {
+        label: key,
+        data: dailySolveData[key],
+        showLine: true,
+        fill: false,
+        borderColor: CHART_COLOR[index]
+      };
+      this.weeklySolveChart.data.datasets[index++] = line;
+    }
+    this.weeklySolveChart.update();
+  }
+
+  preProcessingDailySolve(dailySolve) {
+    const obj = {};
+    for (const e of dailySolve) {
+      if (!obj[e.bojId]) {
+        obj[e.bojId] = [];
+      }
+      obj[e.bojId].push({ x: e.date, y: e.count });
+    }
+
+    return obj;
+  }
+
+  preProcessingUserRank(userRank) {
+    const labels = [];
+    const data = [];
+    userRank.forEach((v, i) => {
+      data.push(v.count);
+      labels.push(v.bojId);
+    });
+    return { labels, data };
+  }
+
+  drawChart(ctx, { labels, data, label }, option) {
+    return new Chart(ctx, {
+      type: 'doughnut',
       data: {
         labels: [...labels],
         datasets: [
           {
-            label: '# of Votes',
-            data: [...datas],
+            label,
+            data: [...data],
             backgroundColor: CHART_COLOR,
             borderColor: CHART_COLOR,
             borderWidth: 1
           }
         ]
       },
-      CHART_OPTION
+      option
+    });
+  }
+
+  drawMulipleLineChart(ctx) {
+    return new Chart(ctx, {
+      type: 'scatter',
+      options: {
+        scales: {
+          yAxes: [
+            {
+              stacked: false,
+              ticks: {
+                beginAtZero: true
+              }
+            }
+          ]
+        }
+      }
     });
   }
 }
