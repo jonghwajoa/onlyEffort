@@ -6,8 +6,7 @@ const index = async (req, res, next) => {
   const problemRank = await DB.WeeklySolve.findCurrentWeekTopTen(34);
   const userRank = await DB.DailySolve.findCurrentWeekTopUser(34);
   const dailySolve = await DB.DailySolve.findDailySolveCntByWeek(34);
-  console.log(dailySolve);
-  res.render('algo/index', { problemRank, userRank, dailySolve });
+  res.render('algo/index', { problemRank, userRank, dailySolve, week: 34 });
 };
 
 const user = async (req, res, next) => {

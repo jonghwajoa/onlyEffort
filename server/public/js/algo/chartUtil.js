@@ -8,6 +8,9 @@ CHART_COLOR = [
 ];
 
 USERRANK_CHART_OPTION = {
+  legend: {
+    position: 'bottom'
+  },
   scales: {
     yAxes: [
       {
@@ -18,16 +21,48 @@ USERRANK_CHART_OPTION = {
           display: false
         }
       }
+    ],
+    xAxes: [
+      {
+        ticks: {
+          beginAtZero: true
+        },
+        gridLines: {
+          display: false
+        }
+      }
     ]
+  },
+  layout: {
+    padding: {
+      left: 10,
+      right: 10,
+      top: 30,
+      bottom: 10
+    }
   }
 };
 
 WEEKLY_SOLVE_CHART_OPTION = {
+  legend: {
+    position: 'left'
+  },
   scales: {
     yAxes: [
       {
-        stacked: true
+        stacked: false,
+        ticks: {
+          beginAtZero: true
+        }
       }
     ]
+  },
+  layout: {
+    padding: {
+      left: 10,
+      right: 10,
+      top: 20,
+      bottom: 0
+    }
   }
 };

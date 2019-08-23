@@ -6,7 +6,7 @@ class AlgoChart {
     const userRnakData = this.preProcessingUserRank(userRank);
     userRnakData.label = 'User Solve Count Rank';
 
-    this.userRankChart = this.drawChart(userRankCtx, userRnakData, USERRANK_CHART_OPTION);
+    this.userRankChart = this.drawChart(userRankCtx, userRnakData);
     this.weeklySolveChart = this.drawMulipleLineChart(weeklySolveCtx);
 
     const dailySolveData = this.preProcessingDailySolve(dailySolve);
@@ -65,25 +65,14 @@ class AlgoChart {
           }
         ]
       },
-      option
+      options: USERRANK_CHART_OPTION
     });
   }
 
   drawMulipleLineChart(ctx) {
     return new Chart(ctx, {
       type: 'scatter',
-      options: {
-        scales: {
-          yAxes: [
-            {
-              stacked: false,
-              ticks: {
-                beginAtZero: true
-              }
-            }
-          ]
-        }
-      }
+      options: WEEKLY_SOLVE_CHART_OPTION
     });
   }
 }

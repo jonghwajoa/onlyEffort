@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       order: [['cnt', 'desc']],
       attributes: ['number', 'name', 'cnt'],
-      limit: 20,
+      limit: 10,
       raw: true
     });
   };

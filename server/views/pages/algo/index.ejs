@@ -8,35 +8,75 @@
     <style></style>
   </head>
   <body>
-    <div class="container">
+    <div class="container mt-5 mb-5">
       <div class="row border border-primary rounded">
+        <!-- 문제순위 -->
         <div class="col-12 col-lg-6 border border-primary rounded">
-          <h2>문제 랭킹</h2>
-          <% problemRank.forEach((e,i) => { %>
-          <div>
-            <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
-              <%= e.number %></a
-            >
-            <%= e.name %> : <%= e.cnt %>
+          <div class="row justify-content-center mt-2">
+            <h2><%=week%>주차 문제 순위</h2>
           </div>
-          <% }) %>
+
+          <!-- table -->
+          <table class="table table-striped mt-2">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">문제번호</th>
+                <th scope="col">문제이름</th>
+                <th scope="col">Count</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% problemRank.forEach((e,i) => { %>
+              <div>
+                <tr>
+                  <th scope="row"><%= i+1 %></th>
+                  <td>
+                    <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
+                      <%= e.number %></a
+                    >
+                  </td>
+                  <td><%= e.name %></td>
+                  <td><%= e.cnt %></td>
+                </tr>
+              </div>
+
+              <% }) %>
+            </tbody>
+          </table>
+          <!-- //table -->
         </div>
+        <!-- // 문제순위 -->
+        <!-- 유저 순위 -->
         <div class="col-12 col-lg-6 border border-primary rounded">
-          <h2>유저 랭킹</h2>
-          <canvas id="userRankChart" width="600" height="600">
+          <div class="row justify-content-center mt-2">
+            <h2><%=week%>주차 유저 순위</h2>
+          </div>
+          <canvas id="userRankChart" width="400" height="400">
             Your browser does not support the canvas element.
           </canvas>
         </div>
-        <div class="col-12 col-lg-6 border border-primary rounded">
-          <canvas id="weeklySolveChart" width="400" height="400">
+        <!-- // 유저순위 -->
+        <!-- 일주일간 문제풀이  -->
+        <div class="col-12 col-lg-12 border border-primary rounded">
+          <div class="row justify-content-center mt-2">
+            <h2><%=week%>주차 문제풀이 갯수</h2>
+          </div>
+          <canvas id="weeklySolveChart" width="400" height="200">
             Your browser does not support the canvas element.
           </canvas>
         </div>
-        <div class="col-12 col-lg-6 border border-primary rounded">
-          유저검색
+        <!-- // 일주일간 문제풀이 -->
+        <!-- 유저 검색 -->
+        <div class="col-12 col-lg-12 border border-primary rounded">
+          <div class="row justify-content-center mt-2">
+            <h2>유저 검색</h2>
+          </div>
         </div>
+        <!-- //유저검색 -->
       </div>
     </div>
+    <!-- //container -->
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="js/algo/chartUtil.js"></script>
