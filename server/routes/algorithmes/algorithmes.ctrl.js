@@ -3,13 +3,11 @@ const API = require('../../lib/API/API');
 const api = new API();
 
 const index = async (req, res, next) => {
-  const datas = await DB.DailySolve.findAll();
-  const arr = [];
-  for (const data of datas) {
-    arr.push(data.dataValues);
-  }
-  res.json(arr);
-  // res.render('algo/index');
+  const datas = await DB.DailySolve.findAll({ raw: true });
+  const topTen = await DB.WeeklySolve.findCurrentWeekTopTen(34);
+  const topUser = await DB.DailySolve.findCurrentWeekTopUser(34);
+  console.log(topUser);
+  res.render('algo/index', { topTen, topUser });
 };
 
 const user = async (req, res, next) => {

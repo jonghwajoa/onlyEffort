@@ -33,5 +33,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  DailySolve.findCurrentWeekTopUser = week => {
+    return DailySolve.findAll({
+      where: {
+        week
+      },
+      attributes: ['bojId', [DailySolve.sequelize.fn('count', '*'), 'count']],
+      group: 'bojId',
+      order: [[DailySolve.sequelize.col('count'), 'desc']],
+      raw: true
+    });
+  };
+
   return DailySolve;
 };

@@ -4,33 +4,40 @@
     <title>Algorithmes</title>
     <link rel="stylesheet" href="/css/reset.css" />
     <link rel="stylesheet" href="/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/nav.css" />
 
-    <style>
-      div.lnb {
-        height: 5rem;
-        background: blue;
-      }
-    </style>
+    <style></style>
   </head>
   <body>
-    <% include ../../partials/header.ejs %>
-    <div class="lnb">
-      ddasda
-    </div>
-
-    <div id="content-wrap">
-      <aside>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum obcaecati laborum voluptate enim cum eligendi
-        nulla voluptates, inventore adipisci odit nisi, modi ipsum totam officia error pariatur cupiditate dignissimos
-        nam!
-      </aside>
-
-      <section class="post-area">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur voluptatibus numquam atque explicabo
-        officiis magnam assumenda officia ullam incidunt nemo repellendus aperiam sequi ea quae, inventore impedit
-        accusamus. Neque, quas.
-      </section>
+    <div class="container-fluid fill">
+      <div class="container">
+        <div class="row h-100 border border-primary rounded">
+          <div class="col-12 col-lg-6 border border-primary rounded">
+            <h2>문제 랭킹</h2>
+            <% topTen.forEach((e,i) => { %>
+            <div>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
+                <%= e.number %></a
+              >
+              <%= e.name %> : <%= e.cnt %>
+            </div>
+            <% }) %>
+          </div>
+          <div class="col-12 col-lg-6 border border-primary rounded">
+            <h2>유저 랭킹</h2>
+            <% topUser.forEach((e,i) => { %>
+            <div>
+              <%= e.bojId %> : <%= e.count %>
+            </div>
+            <% }) %>
+          </div>
+          <div class="col-12 col-lg-6 border border-primary rounded">
+            기간동안 풀문제
+          </div>
+          <div class="col-12 col-lg-6 border border-primary rounded">
+            유저검색
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="js/header.js"></script>

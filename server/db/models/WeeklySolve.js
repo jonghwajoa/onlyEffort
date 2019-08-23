@@ -44,5 +44,17 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  WeeklySolve.findCurrentWeekTopTen = week => {
+    return WeeklySolve.findAll({
+      where: {
+        week
+      },
+      order: [['cnt', 'desc']],
+      attributes: ['number', 'name', 'cnt'],
+      limit: 10,
+      raw: true
+    });
+  };
+
   return WeeklySolve;
 };
