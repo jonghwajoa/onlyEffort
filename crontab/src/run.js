@@ -41,9 +41,14 @@ const saveNewSolveProblem = async compareObj => {
     }
   }
 
-  await DB.sequelize.transaction(tran => {
-    return DB.DailySolve.bulkCreate(bulks, { transaction: tran });
-  });
+  try {
+    await DB.sequelize.transaction(tran => {
+      return DB.DailySolve.bulkCreate(bulks, { transaction: tran });
+    });
+  } catch (e) {
+    e.detail = 'saveNewSolveProblem Error';
+    throw e;
+  }
 };
 
 const calculateDiffCnt = compareObj => {
