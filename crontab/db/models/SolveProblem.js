@@ -30,13 +30,16 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  SolveProblem.createTodaySolve = (bojId, { solveProblem, size }, date) => {
-    return SolveProblem.create({
-      bojId,
-      solveProblem,
-      size,
-      date
-    });
+  SolveProblem.createTodaySolve = (bojId, { solveProblem, size }, date, tran) => {
+    return SolveProblem.create(
+      {
+        bojId,
+        solveProblem,
+        size,
+        date
+      },
+      tran ? { transaction: tran } : {}
+    );
   };
 
   SolveProblem.findOneByDate = (bojId, date) => {

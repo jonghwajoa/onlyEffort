@@ -17,8 +17,16 @@ const dbConnect = async () => {
  * }
  */
 const saveSolveProblem = async todaySolveObj => {
-  for (const bojId in todaySolveObj) {
-    await DB.SolveProblem.createTodaySolve(bojId, todaySolveObj[bojId], TODAY);
+  const tran = await DB.sequelize.transaction();
+  try {
+    for (const bojId in todaySolveObj) {
+      await DB.SolveProblem.createTodaySolve(bojId, todaySolveObj[bojId], TODAY, tran);
+    }
+    await tran.commit();
+  } catch (e) {
+    await tran.rollback();
+    e.detail = 'saveSolveProblem Error';
+    throw e;
   }
 };
 
@@ -32,7 +40,15 @@ const saveNewSolveProblem = async compareObj => {
       bulks.push(form);
     }
   }
-  await DB.DailySolve.bulkCreate(bulks);
+
+  try {
+    await DB.sequelize.transaction(tran => {
+      return DB.DailySolve.bulkCreate(bulks, { transaction: tran });
+    });
+  } catch (e) {
+    e.detail = 'saveNewSolveProblem Error';
+    throw e;
+  }
 };
 
 const calculateDiffCnt = compareObj => {
@@ -88,4 +104,5 @@ try {
   run();
 } catch (e) {
   console.log(e);
+  console.log(e.detail);
 }
