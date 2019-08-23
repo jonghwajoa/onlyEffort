@@ -45,5 +45,18 @@ module.exports = (sequelize, DataTypes) => {
     });
   };
 
+  //SELECT *,count(*) FROM algotest.dailysolve where week=34 group by date,bojId;
+
+  DailySolve.findDailySolveCntByWeek = week => {
+    return DailySolve.findAll({
+      where: {
+        week
+      },
+      attributes: ['bojId', [DailySolve.sequelize.fn('count', '*'), 'count'], 'date'],
+      group: ['date', 'bojId'],
+      order: [[DailySolve.sequelize.col('bojId'), 'desc']],
+      raw: true
+    });
+  };
   return DailySolve;
 };
