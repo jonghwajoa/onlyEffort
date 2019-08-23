@@ -13,7 +13,7 @@
         <div class="row h-100 border border-primary rounded">
           <div class="col-12 col-lg-6 border border-primary rounded">
             <h2>문제 랭킹</h2>
-            <% topTen.forEach((e,i) => { %>
+            <% problemRank.forEach((e,i) => { %>
             <div>
               <a target="_blank" rel="noopener noreferrer" href="https://www.acmicpc.net/problem/<%= e.number%>">
                 <%= e.number %></a
@@ -24,11 +24,7 @@
           </div>
           <div class="col-12 col-lg-6 border border-primary rounded">
             <h2>유저 랭킹</h2>
-            <% topUser.forEach((e,i) => { %>
-            <div>
-              <%= e.bojId %> : <%= e.count %>
-            </div>
-            <% }) %>
+            <canvas id="userRankChart" width="400" height="400"></canvas>
           </div>
           <div class="col-12 col-lg-6 border border-primary rounded">
             기간동안 풀문제
@@ -40,6 +36,12 @@
       </div>
     </div>
 
-    <script src="js/header.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="js/algo/chartUtil.js"></script>
+    <script src="js/algo/chart.js"></script>
+    <script>
+      const userRank = JSON.parse(`<%-JSON.stringify(userRank)%>`);
+      const algoChart = new AlgoChart(userRank);
+    </script>
   </body>
 </html>
