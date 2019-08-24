@@ -7,6 +7,7 @@ router.get('/', function(req, res, next) {
   res.status(304).redirect('/algo');
 });
 router.use('/algo', require('./algorithmes'));
+router.use('/api', require('./api'));
 
 // router.use('/issueMaker', require('./issuemaker'));
 // router.use(require('./accounts'));

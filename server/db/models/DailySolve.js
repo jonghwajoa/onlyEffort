@@ -66,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
         date
       },
       attributes: ['number', 'name', 'date'],
+      order: [['date', 'asc']],
       raw: true
     });
   };
