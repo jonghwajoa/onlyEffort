@@ -116,10 +116,26 @@
           </div>
           <!-- // 일주일간 문제풀이 -->
           <!-- 유저 검색 -->
-          <div class="col-12 col-lg-12 rounded mt-5 p-4">
+          <div class="col-12 col-lg-12 shadow-lg h-10 rounded mt-5 p-4">
             <div class="row justify-content-center mt-2">
               <h2>유저 검색</h2>
             </div>
+
+            <div class="row justify-content-center">
+              <div class="col-6 col-lg-2">
+                <select class="form-control border border-primary">
+                  <% users.forEach((v,i) => { %>
+                  <option><%=v.bojId %></option>
+                  <% })%>
+                </select>
+              </div>
+              <div class="col-6 col-lg-4 rounded text-center border border-info">
+                <div id="user-serach-datetimes"" style="background: #fff; cursor: pointer; padding: 5px 10px; border:
+                1px solid #ccc; width: 100%">
+                <i class="fa fa-calendar"></i>&nbsp; <span></span> <i class="fa fa-caret-down"></i>
+              </div>
+            </div>
+            <button type="button" class="btn btn-primary" id="searchRangeSolve">검색</button>
           </div>
           <!-- //유저검색 -->
         </div>
@@ -249,6 +265,11 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
 
+    <!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
@@ -258,6 +279,49 @@
       const userRank = JSON.parse(`<%-JSON.stringify(userRank)%>`);
       const dailySolve = JSON.parse(`<%-JSON.stringify(dailySolve)%>`);
       const algoChart = new AlgoChart(userRank, dailySolve);
+
+      let start = moment();
+      let end = moment();
+      $(function() {
+        function cb(st, ed) {
+          $('#user-serach-datetimes span').html(st.format('YYYY-MM-DD') + ' - ' + ed.format('YYYY-MM-DD'));
+          start = st;
+          end = ed;
+        }
+
+        $('#user-serach-datetimes').daterangepicker(
+          {
+            startDate: start,
+            endDate: end,
+            ranges: {
+              Today: [moment(), moment()],
+              Yesterday: [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+              'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+              'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+              'This Month': [moment().startOf('month'), moment().endOf('month')],
+              'Last Month': [
+                moment()
+                  .subtract(1, 'month')
+                  .startOf('month'),
+                moment()
+                  .subtract(1, 'month')
+                  .endOf('month')
+              ]
+            },
+            locale: {
+              format: 'YYYY-MM-DD'
+            }
+          },
+          cb
+        );
+
+        cb(start, end);
+      });
+
+      $('#searchRangeSolve').click(() => {
+        console.log(start.format('YYYMMDD'));
+        console.log(end.format('YYYMMDD'));
+      });
     </script>
   </body>
 </html>
