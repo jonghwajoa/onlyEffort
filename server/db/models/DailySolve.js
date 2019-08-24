@@ -58,5 +58,16 @@ module.exports = (sequelize, DataTypes) => {
       raw: true
     });
   };
+
+  DailySolve.findRangeDate = (bojId, date) => {
+    return DailySolve.findAll({
+      where: {
+        bojId,
+        date
+      },
+      attributes: ['number', 'name', 'date'],
+      raw: true
+    });
+  };
   return DailySolve;
 };
