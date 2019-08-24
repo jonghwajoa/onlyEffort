@@ -50,9 +50,9 @@
       </div>
     </header>
 
-    <section class="page-section" id="algo">
+    <section class="page-section">
       <div class="container">
-        <div class="row justify-content-between">
+        <div class="row justify-content-between" id="algo">
           <!-- 문제순위 -->
           <div class="col-12 col-lg-5 col-md-12 shadow-lg rounded p-4">
             <div class="row justify-content-center mt-2">
@@ -110,28 +110,30 @@
           </div>
           <!-- // 일주일간 문제풀이 -->
           <!-- 유저 검색 -->
-          <div class="col-12 col-lg-12 shadow-lg h-10 rounded mt-5 p-4">
+          <div class="col-12 col-lg-12 shadow-lg h-10 rounded mt-5 p-4" id="rangeSearch">
             <div class="row justify-content-center mt-2">
-              <h2>유저 검색</h2>
+              <h2>유저 기간 검색</h2>
             </div>
 
-            <div class="row">
-              <div class="col-12 col-lg-4">
-                <select class="form-control border border-primary" id="range-select">
-                  <% users.forEach((v,i) => { %>
-                  <option><%=v.bojId %></option>
-                  <% })%>
-                </select>
+            <form>
+              <div class="row justify-content-center">
+                <div class="col-12 col-lg-3 rounded text-center">
+                  <select class="form-control border border-primary" id="range-select">
+                    <% users.forEach((v,i) => { %>
+                    <option><%=v.bojId %></option>
+                    <% })%>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 rounded text-center">
+                  <div id="user-serach-datetimes"" style="background: #fff; cursor: pointer; padding: 5px 10px; border:
+                  1px solid #ccc; width: 100%">
+                  <i class="fa fa-calendar"></i>&nbsp; <span></span> <i class="fa fa-caret-down"></i>
+                </div>
               </div>
-              <div class="col-12 col-lg-6 rounded text-center">
-                <div id="user-serach-datetimes"" style="background: #fff; cursor: pointer; padding: 5px 10px; border:
-                1px solid #ccc; width: 100%">
-                <i class="fa fa-calendar"></i>&nbsp; <span></span> <i class="fa fa-caret-down"></i>
+              <div class="col-12 col-lg-3 rounded">
+                <button type="button" class="btn btn-primary w-100" id="searchRangeSolve">검색</button>
               </div>
-            </div>
-            <div class="col-12 col-lg-2 rounded">
-              <button type="button" class="btn btn-primary" id="searchRangeSolve">검색</button>
-            </div>
+            </form>
 
             <!-- table -->
             <div id="range-wrap" class="col-12 col-lg-12"></div>
@@ -139,8 +141,8 @@
           <!-- //유저검색 -->
         </div>
       </div>
-      <!-- //container -->
     </section>
+    <!-- //container -->
 
     <% include ../partials/footer.ejs %>
 
