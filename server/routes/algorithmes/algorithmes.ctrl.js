@@ -3,10 +3,14 @@ const API = require('../../lib/API/API');
 const api = new API();
 
 const index = async (req, res, next) => {
-  const problemRank = await DB.WeeklySolve.findCurrentWeekTopTen(34);
-  const userRank = await DB.DailySolve.findCurrentWeekTopUser(34);
-  const dailySolve = await DB.DailySolve.findDailySolveCntByWeek(34);
-  const users = await DB.User.findAllByBojId();
+  const [problemRank, userRank, dailySolve, users] = await Promise.all([
+    DB.WeeklySolve.findCurrentWeekTopTen(34),
+    DB.DailySolve.findCurrentWeekTopUser(34),
+    DB.DailySolve.findDailySolveCntByWeek(34),
+    DB.User.findAllByBojId()
+  ]);
+
+  console.log(problemRank);
   res.render('index', { problemRank, userRank, dailySolve, users, week: 34 });
 };
 
