@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.status(304).redirect('/algo');
+  res.status(301).redirect('/algo');
 });
 router.use('/algo', require('./algorithmes'));
 router.use('/api', require('./api'));
