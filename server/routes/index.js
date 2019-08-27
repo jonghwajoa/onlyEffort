@@ -2,26 +2,22 @@ const createError = require('http-errors');
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.status(301).redirect('/algo');
+router.get('/', (req, res) => {
+  res.status(301).redirect('/algorithms');
 });
-router.use('/algo', require('./algorithmes'));
-router.use('/api', require('./api'));
 
-// router.use('/issueMaker', require('./issuemaker'));
-// router.use(require('./accounts'));
+router.use('/robots.txt', require('./robots'));
+router.use('/algorithms', require('./algorithmes'));
+router.use('/api', require('./api'));
 
 router.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
 router.use(function(err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
