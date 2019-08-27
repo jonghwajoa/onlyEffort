@@ -1,38 +1,20 @@
-CHART_COLOR = [
-  'rgba(255, 99, 132, 1)',
-  'rgba(54, 162, 235, 1)',
-  'rgba(255, 206, 86, 1)',
-  'rgba(75, 192, 192, 1)',
-  'rgba(153, 102, 255, 1)',
-  'rgba(255, 159, 64, 1)'
-];
-
-USERRANK_CHART_OPTION = {
+const USERRANK_CHART_OPTION = {
+  plugins: {
+    datalabels: {
+      formatter: function(value, context) {
+        const index = context.dataIndex;
+        const datasets = context.chart.data.datasets[0];
+        const name = context.chart.data.labels[index];
+        const total = datasets.data.reduce((prev, next) => prev + next);
+        const percentage = Math.floor((value / total) * 100 + 0.5);
+        return `${name}\n${percentage}%`;
+      }
+    }
+  },
   legend: {
     position: 'bottom'
   },
-  scales: {
-    yAxes: [
-      {
-        ticks: {
-          beginAtZero: true
-        },
-        gridLines: {
-          display: false
-        }
-      }
-    ],
-    xAxes: [
-      {
-        ticks: {
-          beginAtZero: true
-        },
-        gridLines: {
-          display: false
-        }
-      }
-    ]
-  },
+  scales: {},
   layout: {
     padding: {
       left: 10,
