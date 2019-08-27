@@ -1,4 +1,16 @@
 const USERRANK_CHART_OPTION = {
+  plugins: {
+    datalabels: {
+      formatter: function(value, context) {
+        const index = context.dataIndex;
+        const datasets = context.chart.data.datasets[0];
+        const name = context.chart.data.labels[index];
+        const total = datasets.data.reduce((prev, next) => prev + next);
+        const percentage = Math.floor((value / total) * 100 + 0.5);
+        return `${name}\n${percentage}%`;
+      }
+    }
+  },
   legend: {
     position: 'bottom'
   },
@@ -13,7 +25,7 @@ const USERRANK_CHART_OPTION = {
   }
 };
 
-const WEEKLY_SOLVE_CHART_OPTION = {
+WEEKLY_SOLVE_CHART_OPTION = {
   legend: {
     position: 'left'
   },
