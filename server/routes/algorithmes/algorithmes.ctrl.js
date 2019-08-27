@@ -1,5 +1,5 @@
 const DB = require('../../db');
-const API = require('../../lib/API/API');
+const API = require('../../library/API/API');
 const api = new API();
 
 const index = async (req, res, next) => {
