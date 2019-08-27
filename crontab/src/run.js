@@ -11,20 +11,16 @@ const dbConnect = async () => {
 
 /**
  * @param {Object} todaySolveObj
- * Obj = {
- *  solveProblem : {},
- *  size
- * }
  */
 const saveSolveProblem = async todaySolveObj => {
-  const tran = await DB.sequelize.transaction();
+  const transaction = await DB.sequelize.transaction();
   try {
     for (const bojId in todaySolveObj) {
-      await DB.SolveProblem.createTodaySolve(bojId, todaySolveObj[bojId], TODAY, tran);
+      await DB.SolveProblem.createTodaySolve(bojId, todaySolveObj[bojId], TODAY, transaction);
     }
-    await tran.commit();
+    await transaction.commit();
   } catch (e) {
-    await tran.rollback();
+    await transaction.rollback();
     e.detail = 'saveSolveProblem Error';
     throw e;
   }
@@ -42,8 +38,8 @@ const saveNewSolveProblem = async compareObj => {
   }
 
   try {
-    await DB.sequelize.transaction(tran => {
-      return DB.DailySolve.bulkCreate(bulks, { transaction: tran });
+    await DB.sequelize.transaction(transaction => {
+      return DB.DailySolve.bulkCreate(bulks, { transaction });
     });
   } catch (e) {
     e.detail = 'saveNewSolveProblem Error';
@@ -51,8 +47,9 @@ const saveNewSolveProblem = async compareObj => {
   }
 };
 
-const calculateDiffCnt = compareObj => {
+const calculateSolveCount = compareObj => {
   const solveProblemCntObj = {};
+
   for (const bojId in compareObj) {
     const obj = compareObj[bojId];
     for (const number in obj) {
@@ -92,11 +89,14 @@ const run = async () => {
   await dbConnect();
   const bojIds = await getbojIds();
   const analysis = new AnalysisSolveProblem();
+
   const todaySolveObj = await analysis.getSolveProblem(bojIds);
   await saveSolveProblem(todaySolveObj);
+
   const compareObj = await analysis.compareRecentTwoData(bojIds);
   await saveNewSolveProblem(compareObj);
-  const solveProblemCntObj = calculateDiffCnt(compareObj);
+
+  const solveProblemCntObj = calculateSolveCount(compareObj);
   await savePopularProblemOfWeek(solveProblemCntObj);
 };
 
