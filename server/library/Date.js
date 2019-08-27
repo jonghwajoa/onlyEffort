@@ -1,5 +1,6 @@
 const moment = require('moment');
 const DAY_SECOND = 3600 * 24 * 1000;
+const YYMMDD = 'YYYYMMDD';
 
 const getLastWeek = () => {
   const standardDate = new Date();
@@ -12,14 +13,32 @@ const getLastWeek = () => {
   return weekNumber;
 };
 
-const date = new Date();
-const TODAY = moment(date).format('YYYYMMDD');
-date.setDate(date.getDate() - 1);
-const YESTERDAY = moment(date).format('YYYYMMDD');
-const LAST_WEEK = getLastWeek();
+const getToday = () => {
+  const date = new Date();
+  return moment().format(YYMMDD);
+};
 
+const getYesterday = () => {
+  const date = new Date();
+  date.setDate(date.getDate() - 1);
+  return moment(date).format(YYMMDD);
+};
+
+const getStartDateOfWeek = () => {
+  const date = new Date();
+  const diff = date.getDate() - date.getDay() + (date.getDay() === 0 ? -6 : 1);
+  return Number(moment(date.setDate(diff)).format(YYMMDD));
+};
+
+const getDateOfWeek = (year, weekNumber) => {
+  console.log(`year ${year} , weekNumber ${weekNumber}`);
+  const date = (weekNumber - 1) * 7;
+  return Number(moment(new Date(year, 0, date)).format(YYMMDD));
+};
 module.exports = {
-  LAST_WEEK,
-  TODAY,
-  YESTERDAY
+  getLastWeek,
+  getToday,
+  getYesterday,
+  getStartDateOfWeek,
+  getDateOfWeek
 };
